@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     // the rest of the simulation program follows
 
     Ptr<LteHelper> lteHelper = CreateObject<LteHelper>();
+    lteHelper->EnablePhyTraces ();
+
     NodeContainer enbNodes;
     enbNodes.Create(1);
     NodeContainer ueNodes;
@@ -26,9 +28,14 @@ int main(int argc, char *argv[])
     NetDeviceContainer ueDevs;
     ueDevs = lteHelper->InstallUeDevice(ueNodes);
     lteHelper->Attach(ueDevs, enbDevs.Get(0));
+    lteHelper->Attach(ueDevs, enbDevs.Get(0));
+    lteHelper->Attach(ueDevs, enbDevs.Get(0));
+    lteHelper->Attach(ueDevs, enbDevs.Get(0));
     enum EpsBearer::Qci q = EpsBearer::GBR_CONV_VOICE;
     EpsBearer bearer(q);
     lteHelper->ActivateDataRadioBearer(ueDevs, bearer);
+
+    // lteHelper->DeActivateDedicatedEpsBearer(ueDevs, enbDevs.Get(0), q);
 
 
   AnimationInterface anim("lte2Nodes.xml");				
